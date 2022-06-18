@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+
+# Use a deployment to deploy multiple replicas of a docker container
+# and to declaritively roll out updates to them
+kind: Deployment
+
+# metadata about this deployment
+metadata:
+  name: example-app
+
+# THe specification that configures this deployment
+spec:
+  # this tells the deployment to find your container
+  selector:
+    matchLabels:
+      app: example-app
+
+
+# This tells the deployment to run 3 replicas of your container
+replicas: 3
+
+# specify how to update the deployment (here with rolling update)
+strategy:
+  rollingUpdate:
+    maxSurge: 3
+    maxUnavailable: 0
+  type: RollingUpdate
+
+# this is th etemplate for what containers to deploy
+template:
+
+  # metadata for these containers
+  metadata:
+    labels:
+      app: example-app
+
+  # the specification for your containers
+  spec:
+    containers:
+
+      # Run apache listening on port 80
+      - name: example-app
+        image: httpd:2.4.39
+        ports:
+          - containerPort: 80
