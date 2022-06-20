@@ -3,6 +3,9 @@
 
         "catpics": {
             "Type": "AWS::S3::Bucket"
+        },
+        "dogpics": {
+            "Type": "AWS::S3::Bucket"
         }
     }
 }
